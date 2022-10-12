@@ -1,0 +1,59 @@
+Migration:
+
+1-First we have do the Pre-migration assessment
+
+*we have to understand the architecture of db, data movement,upstream and downstream
+
+*app type=web app
+*concurrency : howmany concurrent connections
+*frequently data is being written : TPS- transactions per second, queries per second-qps
+*application architecture : applications / service that are connecting to the db and how they are connecting - JDBC/ODBC, API call , python call 
+
+{ODBC is an SQL-based Application Programming Interface (API) created by Microsoft that is used by Windows software applications to access databases via SQL. JDBC is an SQL-based API created by Sun Microsystems to enable Java applications to use SQL for database access.
+
+JDBC helps you to write Java applications that manage these three programming activities: Connect to a data source, like a database. Send queries and update statements to the database.}
+
+*app layers : micro services - talk to DB - write/read  - upstream application
+*DB architecture : Primary/ replication / high availability setup/ backup/ retention/ version 
+*DB size: 
+*Extensions: on-premise database
+*how the data is split: diff tablespaces, file systems etc
+*data: schemas/ objects 
+*ram:
+*cpu:
+*os:
+*db version:
+*no# users : 
+*user privileges: 
+*backup tools : 
+*retention period - 90 days 
+*RTO : recovery time objective - 5/10 min
+*RPO : recovery point objective - til what data 
+
+AWS RDS postgres : validate whether RDS is the right solution to meet RTO/ RPO , extension, rentention - 35 days , tools integration - connection pooling, client tools, data integration checks - upstream/down stream, costing - ? - proceed 
+
+
+
+Migration:
+-----------
+-We need to create an empty DB and based on the app criticality we have to follow the below steps:
+
+Low & medium: pg_dump on onpremise, move backup to s3, pull s3 backup to ec2, restore to rds from ec2 
+
+High:source and target data is in sync - 
+connect app to rds
+
+
+post migration:
+----------------
+
+1. validate db connectivity - from application
+2. validate data in the db - db size, count of objects, data accessibility
+   - any downstream applications / data integrations / data links/ FDW foreign data wrappers - need to reconfigure
+   - alerting / monitoring / backups etc - dba
+3. testing team will validate complete application functionality
+
+migration is completed
+
+
+
